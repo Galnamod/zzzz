@@ -68,9 +68,12 @@
                 <li>Interfaz intuitiva y accesible desde dispositivos móviles</li>
                 <li>Seguridad en el acceso a los datos</li>
             </ol>
+            </td>
+		</tr>
+	</tbody>
+</table>
+<br>
 
-
-    
 ## Módulo 4: Gestion del IPERC
 
 ![Proceso de Planificacion](../Diagramas/Gestion-IPERC_TO-BE.png)
@@ -185,9 +188,3 @@
 </table>
 
 ---
-            </td>
-		</tr>
-	</tbody>
-</table>
-
-<br>
