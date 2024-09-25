@@ -17,7 +17,7 @@
 			<td colspan="2">
     <ol>
        <li>Ingeniero supervisor</li>
-     | <li>Un trabajador expuesto</li>
+      <li>Un trabajador expuesto</li>
     </ol>
     </td>
     </tr>
