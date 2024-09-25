@@ -2,24 +2,22 @@
 	<tbody>
 		<tr>
 			<td>Nombre</td>
-			<td colspan="2">Elaboración y revisión del IPERC</td>
+			<td colspan="2">Elaboracion del IPERC</td>
 		</tr>
 		<tr>
 			<td>Tarea realizada por el usuario</td>
-			<td colspan="2">PRecolectar información de los peligros y clasificar el nivel de riesgo que representa y acciones y medidas a tomar.</td>
+			<td colspan="2">Recolectar información de los peligros, llenar las actividades, tareas y reconocer e identificar los riesgos y analizar y generar un valor de riesgo inicial.</td>
 		</tr>
 		<tr>
 			<td>Actor inicializador</td>
-			<td colspan="2">Jefe de Área</td>
+			<td colspan="2">Ingeniero supervisor</td>
 		</tr>
 		<tr>
 			<td>Actores participantes</td>
 			<td colspan="2">
     <ol>
-      <li>Superintendente / Jefe de Área</li>
-      <li>Jefe de Sección / Ingeniero supervisor</li>
-      <li>Un trabajador expuesto</li>
-      <li>Director / Jefe de Sección / Ingeniero de seguridad</li>
+       <li>Ingeniero supervisor</li>
+     | <li>Un trabajador expuesto</li>
     </ol>
     </td>
     </tr>
@@ -27,12 +25,12 @@
             <th>Flow of Events</th>
             <td>
             <ol>
-                <li>El jefe de mantenimiento ingresa al sistema digital.</li>
-                <li>Selecciona el equipo a ser mantenido.</li>
-                <li>Configura las tareas de mantenimiento preventivo.</li>
-                <li>Asigna personal y recursos (herramientas, tiempo).</li>
-                <li>Confirma el plan de mantenimiento.</li>
-                <li>El sistema genera las órdenes de trabajo digitalmente.</li>
+                <li>El ingeniero supervisor inicializa el sistema.</li>
+                <li>Ingresa los procesos, actividades y tareas.</li>
+                <li>Identifica los peligros asociados a las tareas.</li>
+                <li>Evalúa los riesgos relacionados.</li>
+		<li>Reconoce al afectado, el tipo de daño causado y la consecuencia dañina del riesgo</li>
+                <li>El sistema genera una evaluación de riesgo.</li>
             </ol>
             </td>
         </tr>
@@ -40,18 +38,17 @@
 			<th>Excepciones</th>
 			<td>
             <ol>
-                <li>El equipo no está disponible para mantenimiento.</li>
-                <li>Recursos (técnicos, herramientas) no disponibles.</li>
+                <li>Si faltan datos, el sistema notifica.</li>
             </ol>
             </td>
 		</tr>
 		<tr>
 			<td>Precondición</td>
-			<td colspan="2">El equipo y su historial de mantenimiento deben estar registrados en el sistema</td>
+			<td colspan="2">Acceso autorizado al sistema IPERC y que el ingeniero supervisor tenga los datos recogidos de los trabajadores.</td>
 		</tr>
 		<tr>
 			<td>Postcondición</td>
-			<td colspan="2">El plan de mantenimiento queda almacenado y las órdenes de trabajo son asignadas digitalmente</td>
+			<td colspan="2">El IPERC queda almacenado en el sistema.</td>
 		</tr>
 		<tr>
 			<td>Casos de uso incluidos</td>
@@ -59,7 +56,7 @@
 		</tr>
 		<tr>
 			<td>Servicios utilizados</td>
-			<td colspan="2">Gestión de equipos, Gestión de órdenes de trabajo, Notificaciones</td>
+			<td colspan="2">Sistema de gestión de riesgos y tareas IPERC</td>
 		</tr>
 		<tr>
 			<th>Requisitos no funcionales</th>
