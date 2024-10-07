@@ -210,7 +210,7 @@
 | P-RAR     | Raro que suceda   |
 | P-IMP     | Prácticamente imposible  que suceda   |
 
-**La tabla aparece conjunta con las tablas de la siguiente entidad**
+**La tabla de riesgos aparece conjunta con las tabla de la siguiente entidad (Riesgo residual)**
 
 ---
 
