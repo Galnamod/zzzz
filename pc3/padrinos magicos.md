@@ -11,36 +11,76 @@
 
 **Eventos:**
 
-1. **Carga de datos iniciales:**
+1. Carga de los empleados:
+   
+	```sql
 
-    Verificar y añadir el equipo evaluador
-    Búsqueda de cada empleado en la tabla `Empleado` usando el `Nombre`
+	-- Paso 1: Verificar si existe un equipo evaluador con los mismos empleados
+	
+	-- Seleccionar los empleados deseados en una tabla temporal
+	CREATE TEMP TABLE EmpleadosSeleccionados AS
+	SELECT id_empleado
+	FROM empleado
+	WHERE nombre IN ('Juan Pérez', 'Lucía Fernández', 'Pedro Ramírez', 'Andrés Ruiz', 'Elena Castillo'); -- Ajusta estos nombres según sea necesario
+	
+	-- Buscar el equipo evaluador existente con los mismos empleados
+	-- Si no existe tal equipo, generaremos un nuevo ID.
+	DO $$
+	DECLARE
+	    equipo_final_id INT;
+	BEGIN
+	    -- Paso 2: Determinar el ID del equipo evaluador final
+	    equipo_final_id := (
+	        SELECT COALESCE(
+	            (SELECT ee.id_equipo_evaluador
+	             FROM equipoevaluadorxempleado ee
+	             JOIN EmpleadosSeleccionados es ON es.id_empleado = ee.id_empleado
+	             GROUP BY ee.id_equipo_evaluador
+	             HAVING COUNT(*) = (SELECT COUNT(*) FROM EmpleadosSeleccionados)
+	             LIMIT 1),
+	            (SELECT MAX(id_equipo_evaluador) + 1 FROM equipo_evaluador)
+	        )
+	    );
+	
+	    -- Paso 3: Insertar un nuevo equipo evaluador si no existe
+	    IF NOT EXISTS (
+	        SELECT 1
+	        FROM equipo_evaluador
+	        WHERE id_equipo_evaluador = equipo_final_id
+	    ) THEN
+	        INSERT INTO equipo_evaluador (id_equipo_evaluador, cant_empleados)
+	        VALUES (equipo_final_id, 0); -- Inicialmente con 0 empleados, se actualizará más adelante
+	    END IF;
+	
+	    -- Paso 4: Asociar los empleados seleccionados al equipo evaluador final
+	    INSERT INTO equipoevaluadorxempleado (id_equipo_evaluador, id_empleado)
+	    SELECT equipo_final_id, id_empleado
+	    FROM EmpleadosSeleccionados
+	    ON CONFLICT DO NOTHING; -- Evitar duplicados en caso de que ya existan las asociaciones
+	
+	    -- Paso 5: Actualizar la cantidad de empleados en el equipo evaluador
+	    UPDATE equipo_evaluador
+	    SET cant_empleados = (SELECT COUNT(*) FROM EmpleadosSeleccionados)
+	    WHERE id_equipo_evaluador = equipo_final_id;
+	
+	    -- Output del equipo evaluador final (para verificar)
+	    RAISE NOTICE 'ID del equipo evaluador final: %', equipo_final_id;
+	
+	    END $$;
 
-    ```sql
-    SELECT * FROM Empleado WHERE Nombre = '<NombreEmpleado>';
-    ```
+	-- Limpieza de la tabla temporal
+	DROP TABLE IF EXISTS EmpleadosSeleccionados;
+	
+	```
 
-    Insertar en el equipo evaluador solo si el empleado existe
+  
+3. Registrar el proceso:
+Insertar el proceso	
 
-    ```sql
-    INSERT INTO EquipoEvaluadorXEmpleado (id_equipo_evaluador, codigo_empleado)
-    VALUES (<id_equipo>, (SELECT Codigo_empleado FROM Empleado WHERE Nombre = '<NombreEmpleado>'));
-    ```
-
-
-2. **Botón Generar credenciales:**
-
-    Se agregará un nuevo registro en la tabla Empleado
-    ```sql
-    DO $$
-    DECLARE
-        nueva_contraseña VARCHAR(9);
-    BEGIN
-        nueva_contraseña := substring(md5(random()::text) from 1 for 9);
-        INSERT INTO public."Empleado" (nombre, correo, "contraseña", telefono, dni, rol_id)
-        VALUES ('<Nombre>', '<correo>@bcp.pe', nueva_contraseña, '<telefono>', '<DNI>', (SELECT id_rol FROM public."Roles" WHERE nombre_rol = '<Rol>'));
-    END $$;
-    ```
+	```sql
+	INSERT INTO proceso (nombre_proceso)
+	VALUES ('<NombreProceso>')
+	```
 
 ---
 
